@@ -197,7 +197,7 @@ const Stage4 = () => {
       delay: 5000,
     });
     setTimeout(() => {
-      navigate("/FinalDiary");
+      navigate("/FinalDiaryScene");
     }, 8000);
   };
   
