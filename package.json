@@ -2,7 +2,7 @@
   "name": "valen",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Nishanthtamil.github.io/valen",
+  "homepage": "https://Nishanthtamil.github.io",
   "dependencies": {
     "animejs": "^3.2.2",
     "cra-template": "1.2.0",
