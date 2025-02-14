@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/valen/static/css/main.e6c13ad2.css",
-    "main.js": "/valen/static/js/main.fae378d3.js",
-    "static/js/488.e0b39837.chunk.js": "/valen/static/js/488.e0b39837.chunk.js",
-    "static/media/IMG_20240719_133322.jpg": "/valen/static/media/IMG_20240719_133322.03f4c1401dbfab042c5d.jpg",
-    "index.html": "/valen/index.html",
-    "main.e6c13ad2.css.map": "/valen/static/css/main.e6c13ad2.css.map",
-    "main.fae378d3.js.map": "/valen/static/js/main.fae378d3.js.map",
-    "488.e0b39837.chunk.js.map": "/valen/static/js/488.e0b39837.chunk.js.map"
+    "main.css": "/valen/components/LandingPage/static/css/main.e6c13ad2.css",
+    "main.js": "/valen/components/LandingPage/static/js/main.dd0b51ae.js",
+    "static/js/488.e0b39837.chunk.js": "/valen/components/LandingPage/static/js/488.e0b39837.chunk.js",
+    "static/media/IMG_20240719_133322.jpg": "/valen/components/LandingPage/static/media/IMG_20240719_133322.03f4c1401dbfab042c5d.jpg",
+    "index.html": "/valen/components/LandingPage/index.html",
+    "main.e6c13ad2.css.map": "/valen/components/LandingPage/static/css/main.e6c13ad2.css.map",
+    "main.dd0b51ae.js.map": "/valen/components/LandingPage/static/js/main.dd0b51ae.js.map",
+    "488.e0b39837.chunk.js.map": "/valen/components/LandingPage/static/js/488.e0b39837.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.fae378d3.js"
+    "static/js/main.dd0b51ae.js"
   ]
 }
