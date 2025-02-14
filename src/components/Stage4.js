@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import anime from 'animejs';
 
-const Stage4 = () => {
+const Stage4= () => {
   const navigate = useNavigate();
   const [phase, setPhase] = useState(1);
   const [rescueStarted, setRescueStarted] = useState(false);
@@ -100,15 +100,7 @@ const Stage4 = () => {
   const husbandArmRef = useRef(null);
   const letterRef = useRef(null);
   const environmentRef = useRef(null);
-  const audioRef = useRef(null);
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.play().catch(err => {
-        console.warn("Autoplay prevented; user interaction may be required.", err);
-      });
-    }
-  }, []);
-  
+
   useEffect(() => {
     if (phase === 3) {
       anime({
@@ -197,7 +189,7 @@ const Stage4 = () => {
       delay: 5000,
     });
     setTimeout(() => {
-      navigate("/FinalDiary");
+      navigate("/FinalDiaryScene");
     }, 8000);
   };
   
@@ -269,8 +261,8 @@ const Stage4 = () => {
       
       {phase === 2 && (
         <div style={{ textAlign: 'center' }}>
-          <h1 style={{ fontSize: '3rem', marginBottom: '1rem', color: 'white' }}>Bomb Activation</h1>
-          <p style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'white' }}>
+          <h1 style={{ fontSize: '3rem', marginBottom: '1rem' ,color:"white"}}>Bomb Activation</h1>
+          <p style={{ fontSize: '1.5rem', marginBottom: '1rem' ,color:"white"}}>
             Activate the bomb to blast away the villain’s stronghold!
           </p>
           <div ref={bombRef} onClick={handleBombClick} style={{
@@ -295,9 +287,9 @@ const Stage4 = () => {
       
       {phase === 3 && (
         <div style={{ textAlign: 'center' }}>
-          <h1 style={{ fontSize: '3rem', marginBottom: '1rem', color:"white" }}>The Grand Rescue</h1>
-          <p style={{ fontSize: '1.5rem', marginBottom: '1rem', color:"white" }}>
-            The explosion has cleared the path, the villain is dead—rescue your husband!
+          <h1 style={{ fontSize: '3rem', marginBottom: '1rem' }}>The Grand Rescue</h1>
+          <p style={{ fontSize: '1.5rem', marginBottom: '1rem', color:"white"}}>
+            The explosion has cleared the path,the villian is dead rescue your husband!
           </p>
           <div style={{
             position: 'relative',
@@ -426,7 +418,7 @@ const Stage4 = () => {
             left: '50%',
             transform: 'translateX(-50%)'
           }}>
-            "En pondatti, you have rescued me my dear. Here, this is for you, my karadi."
+            "En pondatti, you have rescued me my dear . Here this is for you my karadi"
           </div>
           <button onClick={handleRescueClick} style={{
             position: 'absolute',
