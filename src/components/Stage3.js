@@ -1,14 +1,7 @@
-// src/components/Stage3ComplexMaze.js
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import anime from 'animejs';
 
-// Maze cell values:
-// 0 = free cell
-// 1 = wall
-// 2 = memory fragment cell (collectible)
-// 3 = obstacle cell (requires solving mini-puzzle)
-// 4 = exit cell (activated once all fragments are collected)
 const initialMaze = [
   [0, 0, 1, 0, 0],
   [0, 3, 1, 0, 2],
@@ -17,45 +10,32 @@ const initialMaze = [
   [0, 0, 0, 1, 0],
 ];
 
-const cellSize = 80; // size in pixels for each cell
-const gap = 2;       // gap between cells (in pixels)
-const containerPadding = 4; // padding on the maze container (in pixels)
-const avatarSize = 60;      // size (width and height) of the avatar
+const cellSize = 80;
+const gap = 2;
+const containerPadding = 4;
+const avatarSize = 60; 
 
 const Stage3 = () => {
   const navigate = useNavigate();
-  
-  // Maze state remains fixed for this example
   const [maze, setMaze] = useState(initialMaze);
-  // Player position state: starting at top-left (row: 0, col: 0)
   const [playerPos, setPlayerPos] = useState({ row: 0, col: 0 });
-  // Count how many memory fragments (value 2) have been collected
   const [fragmentsCollected, setFragmentsCollected] = useState(0);
   const totalFragments = initialMaze.flat().filter(cell => cell === 2).length;
-  // Whether exit is active (will set bottom-right cell to 4 when fragments collected)
   const [exitActive, setExitActive] = useState(false);
-  // Timer state (60 seconds)
   const [timeLeft, setTimeLeft] = useState(60);
-  // Mini-puzzle state for obstacle cells (value 3)
   const [showMiniPuzzle, setShowMiniPuzzle] = useState(false);
-  const [miniPuzzleCell, setMiniPuzzleCell] = useState(null); // store {row, col} of current obstacle
+  const [miniPuzzleCell, setMiniPuzzleCell] = useState(null);
   const [miniPuzzleInput, setMiniPuzzleInput] = useState([]);
-  const correctMiniSequence = [1, 2, 3]; // sequence required to clear an obstacle
-
-  // Refs for animations
+  const correctMiniSequence = [1, 2, 3];
   const playerRef = useRef(null);
   const timerRef = useRef(null);
   const timerIntervalRef = useRef(null);
-
-  // Helper function: compute absolute position (in pixels) of a cell's center for the avatar.
   const computeAvatarPosition = (row, col) => {
     const offset = (cellSize - avatarSize) / 2;
     const x = containerPadding + col * (cellSize + gap) + offset;
     const y = containerPadding + row * (cellSize + gap) + offset;
     return { x, y };
   };
-
-  // Start countdown timer on mount
   useEffect(() => {
     timerIntervalRef.current = setInterval(() => {
       setTimeLeft(prev => {
@@ -82,8 +62,6 @@ const Stage3 = () => {
     }, 1000);
     return () => clearInterval(timerIntervalRef.current);
   }, []);
-
-  // Animate timer bar width on timeLeft change
   useEffect(() => {
     const progress = (timeLeft / 60) * 100;
     anime({
@@ -93,8 +71,6 @@ const Stage3 = () => {
       duration: 900
     });
   }, [timeLeft]);
-
-  // Activate exit cell when all fragments are collected
   useEffect(() => {
     if (fragmentsCollected === totalFragments && !exitActive) {
       setExitActive(true);
@@ -105,8 +81,6 @@ const Stage3 = () => {
       });
     }
   }, [fragmentsCollected, totalFragments, exitActive]);
-
-  // Function to move the player using arrow buttons
   const movePlayer = (direction) => {
     const { row, col } = playerPos;
     let newRow = row;
@@ -115,18 +89,14 @@ const Stage3 = () => {
     if (direction === 'down') newRow = row + 1;
     if (direction === 'left') newCol = col - 1;
     if (direction === 'right') newCol = col + 1;
-    
-    // Check boundaries
     if (newRow < 0 || newRow >= maze.length || newCol < 0 || newCol >= maze[0].length) return;
     const cellValue = maze[newRow][newCol];
-    if (cellValue === 1) return; // wall
+    if (cellValue === 1) return;
     if (cellValue === 3) {
-      // Trigger mini-puzzle if obstacle cell
       setMiniPuzzleCell({ row: newRow, col: newCol });
       setShowMiniPuzzle(true);
       return;
     }
-    // Compute new position for the avatar
     const { x: endX, y: endY } = computeAvatarPosition(newRow, newCol);
     anime({
       targets: playerRef.current,
@@ -136,8 +106,6 @@ const Stage3 = () => {
       duration: 300,
     });
     setPlayerPos({ row: newRow, col: newCol });
-    
-    // If cell is a memory fragment (2), collect it
     if (cellValue === 2) {
       setFragmentsCollected(prev => prev + 1);
       setMaze(prevMaze => {
@@ -152,7 +120,6 @@ const Stage3 = () => {
         easing: 'easeInOutQuad'
       });
     }
-    // If exit cell (4) and exit is active, win stage
     if (exitActive && cellValue === 4) {
       anime({
         targets: '.maze-container',
@@ -166,8 +133,6 @@ const Stage3 = () => {
       }, 3000);
     }
   };
-
-  // Mini-puzzle for obstacle cell: require sequence [1, 2, 3]
   const handleMiniPuzzleClick = (num) => {
     setMiniPuzzleInput(prev => {
       const newInput = [...prev, num];
@@ -204,8 +169,6 @@ const Stage3 = () => {
       return newInput;
     });
   };
-
-  // Helper: move player immediately (after mini-puzzle success)
   const movePlayerToCell = (row, col) => {
     const { x: endX, y: endY } = computeAvatarPosition(row, col);
     anime({
@@ -217,8 +180,6 @@ const Stage3 = () => {
     });
     setPlayerPos({ row, col });
   };
-
-  // Animate a "shift" effect on wall cells every few seconds
   useEffect(() => {
     const shiftInterval = setInterval(() => {
       anime({
@@ -245,7 +206,6 @@ const Stage3 = () => {
       position: "relative"
     }}>
       <h1 style={{ marginBottom: "1rem" }}>Stage 3: The Labyrinth of Lost Memories</h1>
-      {/* Timer Bar */}
       <div style={{
         position: "absolute",
         top: "20px",
@@ -262,7 +222,6 @@ const Stage3 = () => {
           borderRadius: "5px"
         }}></div>
       </div>
-      {/* Maze Grid Container */}
       <div className="maze-container" style={{
         position: "relative",
         display: "grid",
@@ -280,9 +239,9 @@ const Stage3 = () => {
                 width: `${cellSize}px`,
                 height: `${cellSize}px`,
                 backgroundColor: cell === 1 ? "#333" :
-                                  cell === 2 ? "#8f8" :  // memory fragment
-                                  cell === 3 ? "#f80" :  // obstacle
-                                  cell === 4 ? "#00f" :  // exit
+                                  cell === 2 ? "#8f8" :
+                                  cell === 3 ? "#f80" : 
+                                  cell === 4 ? "#00f" : 
                                   "#eee",
                 position: "relative",
                 display: "flex",
@@ -297,10 +256,8 @@ const Stage3 = () => {
             </div>
           ))
         )}
-        {/* Player Avatar: positioned absolutely within the maze container */}
         <div ref={playerRef} style={{
           position: "absolute",
-          // Calculate position using our helper function:
           transform: `translate(${computeAvatarPosition(playerPos.row, playerPos.col).x}px, ${computeAvatarPosition(playerPos.row, playerPos.col).y}px)`,
           width: `${avatarSize}px`,
           height: `${avatarSize}px`,
@@ -322,7 +279,6 @@ const Stage3 = () => {
           </div>
         </div>
       </div>
-      {/* Control Buttons */}
       <div style={{
         marginTop: "1rem",
         display: "flex",
@@ -372,7 +328,6 @@ const Stage3 = () => {
           </button>
         </div>
       </div>
-      {/* Mini-puzzle overlay for obstacle cells */}
       {showMiniPuzzle && (
         <div className="mini-puzzle-overlay" style={{
           position: "absolute",
