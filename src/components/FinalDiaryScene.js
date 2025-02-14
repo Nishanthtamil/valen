@@ -152,7 +152,6 @@ const FinalDiaryBookRealistic = () => {
 
   return (
     <div style={containerStyle}>
-      {/* Hidden audio element */}
       <audio ref={audioRef} src="/Die With A Smile Song Ringtone Download Bruno Mars - MobCup.Com.Co.mp3" loop />
       <div ref={bookRef} style={bookContainerStyle}>
         <div ref={leftPageRef} style={leftPageStyle}>
